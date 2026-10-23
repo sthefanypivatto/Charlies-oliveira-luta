@@ -2,477 +2,1025 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080816">
-  <title>Motion Studio | Animação Criativa</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101014">
+<title>Charles Oliveira | Do Bronx</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    :root {
-      --purple: #a855f7;
-      --blue: #00d4ff;
-      --pink: #ff2d95;
-      --orange: #ff8a30;
-      --bg: #080816;
-    }
+:root {
+  --azul: #1261d8;
+  --azul-claro: #39a9ff;
+  --fundo: #101014;
+  --texto: #ffffff;
+  --cinza: #c7c4ce;
+}
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--bg);
-      color: white;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+html {
+  scroll-behavior: smooth;
+}
 
-    #particles {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-    .background-glow {
-      position: fixed;
-      width: 380px;
-      height: 380px;
-      border-radius: 50%;
-      filter: blur(110px);
-      opacity: .3;
-      pointer-events: none;
-      animation: float 9s ease-in-out infinite alternate;
-    }
+#particles {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
 
-    .glow-one {
-      background: var(--purple);
-      top: -130px;
-      left: -100px;
-    }
+.background-glow {
+  position: fixed;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: .27;
+  pointer-events: none;
+  animation: flutuar 9s ease-in-out infinite alternate;
+}
 
-    .glow-two {
-      background: var(--blue);
-      bottom: -150px;
-      right: -100px;
-      animation-delay: -4s;
-    }
+.glow-one {
+  background: var(--azul);
+  top: -130px;
+  left: -100px;
+}
 
-    header, main, footer {
-      position: relative;
-      z-index: 1;
-    }
+.glow-two {
+  background: #174b91;
+  bottom: -150px;
+  right: -100px;
+  animation-delay: -4s;
+}
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 25px 8%;
-      border-bottom: 1px solid #ffffff15;
-      backdrop-filter: blur(12px);
-    }
+header, main, footer {
+  position: relative;
+  z-index: 1;
+}
 
-    .logo {
-      font-size: 1.25rem;
-      font-weight: 900;
-      letter-spacing: 2px;
-    }
+header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 8%;
+  border-bottom: 2px solid var(--azul);
+  background: #101014df;
+  backdrop-filter: blur(12px);
+  z-index: 5;
+}
 
-    .logo span {
-      color: var(--blue);
-      text-shadow: 0 0 18px var(--blue);
-    }
+.logo {
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
 
-    .status {
-      color: #b5ffdc;
-      font-size: .8rem;
-      border: 1px solid #48ffb044;
-      border-radius: 30px;
-      padding: 9px 13px;
-      background: #48ffb00c;
-    }
+.logo span {
+  color: var(--azul-claro);
+  text-shadow: 0 0 18px #39a9ff88;
+}
 
-    .hero {
-      min-height: 77vh;
-      padding: 90px 22px 65px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
+nav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
 
-    .eyebrow {
-      color: var(--blue);
-      text-transform: uppercase;
-      font-size: .78rem;
-      font-weight: bold;
-      letter-spacing: 4px;
-      margin-bottom: 25px;
-      animation: reveal .8s both;
-    }
+nav a {
+  color: #eee;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: .9rem;
+  transition: .25s;
+}
 
-    h1 {
-      font-size: clamp(3rem, 9vw, 7.5rem);
-      line-height: .98;
-      letter-spacing: -4px;
-      font-weight: 900;
-      animation: reveal 1s .1s both;
-    }
+nav a:hover {
+  color: var(--azul-claro);
+}
 
-    .gradient-text {
-      display: inline-block;
-      color: transparent;
-      background: linear-gradient(
-        90deg,
-        var(--blue),
-        var(--purple),
-        var(--pink),
-        var(--orange),
-        var(--blue)
-      );
-      background-size: 300% auto;
-      background-clip: text;
-      -webkit-background-clip: text;
-      animation: gradient 6s linear infinite;
-      filter: drop-shadow(0 0 24px #a855f744);
-    }
+.status {
+  color: #b7ddff;
+  font-size: .78rem;
+  border: 1px solid #39a9ff55;
+  border-radius: 30px;
+  padding: 9px 13px;
+  background: #1261d812;
+  white-space: nowrap;
+}
 
-    .description {
-      max-width: 620px;
-      color: #b7b7cb;
-      font-size: clamp(1rem, 2vw, 1.2rem);
-      line-height: 1.8;
-      margin: 28px 0 35px;
-      animation: reveal 1s .25s both;
-    }
+/* SEÇÃO PRINCIPAL */
 
-    .buttons {
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      flex-wrap: wrap;
-      animation: reveal 1s .4s both;
-    }
+.hero {
+  min-height: 76vh;
+  padding: 75px 8% 65px;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 35px;
+  align-items: center;
+  background: radial-gradient(
+    ellipse at 80% 45%,
+    #0b2c62 0%,
+    #101014 65%
+  );
+}
 
-    .button {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 52px;
-      padding: 0 25px;
-      border-radius: 12px;
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-      transition: .3s;
-    }
+.eyebrow {
+  color: #72c7ff;
+  text-transform: uppercase;
+  font-size: .78rem;
+  font-weight: bold;
+  letter-spacing: 4px;
+  margin-bottom: 22px;
+  animation: entrada .8s both;
+}
 
-    .primary {
-      color: #080816;
-      background: linear-gradient(110deg, var(--blue), #a8fffb);
-      box-shadow: 0 0 30px #00d4ff33;
-    }
+h1 {
+  font-size: clamp(3rem, 7.5vw, 6.8rem);
+  line-height: .95;
+  letter-spacing: -4px;
+  font-weight: 900;
+  animation: entrada 1s .1s both;
+}
 
-    .secondary {
-      border: 1px solid #ffffff35;
-      background: #ffffff08;
-    }
+.gradient-text {
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    #fff,
+    #39a9ff,
+    #1261d8,
+    #a6dcff,
+    #fff
+  );
+  background-size: 300% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: gradiente 6s linear infinite;
+  filter: drop-shadow(0 0 22px #1261d844);
+}
 
-    .button:hover {
-      transform: translateY(-5px) scale(1.03);
-      box-shadow: 0 0 35px #a855f766;
-    }
+.description {
+  max-width: 610px;
+  color: var(--cinza);
+  font-size: 1.08rem;
+  line-height: 1.85;
+  margin: 26px 0 32px;
+  animation: entrada 1s .25s both;
+}
 
-    .showcase {
-      max-width: 1050px;
-      margin: 0 auto 90px;
-      padding: 0 22px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
+.buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
 
-    .card {
-      min-height: 220px;
-      position: relative;
-      overflow: hidden;
-      padding: 28px;
-      border-radius: 20px;
-      border: 1px solid #ffffff17;
-      background: linear-gradient(145deg, #ffffff0d, #ffffff03);
-      backdrop-filter: blur(12px);
-      transition: transform .4s, border-color .4s;
-      animation: reveal .9s both;
-    }
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+  padding: 0 22px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: .3s;
+}
 
-    .card:nth-child(2) { animation-delay: .15s; }
-    .card:nth-child(3) { animation-delay: .3s; }
+.primary {
+  background: linear-gradient(
+    110deg,
+    #1261d8,
+    #39a9ff
+  );
+  box-shadow: 0 0 30px #1261d833;
+}
 
-    .card:hover {
-      transform: translateY(-8px);
-      border-color: #00d4ff88;
-    }
+.secondary {
+  border: 1px solid #ffffff35;
+  background: #ffffff08;
+}
 
-    .card::after {
-      content: "";
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      right: -70px;
-      bottom: -80px;
-      border-radius: 50%;
-      background: var(--card-color, var(--purple));
-      filter: blur(65px);
-      opacity: .6;
-      transition: .4s;
-    }
+.button:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 0 35px #1261d866;
+}
 
-    .card:hover::after {
-      opacity: 1;
-      transform: scale(1.5);
-    }
+/* ILUSTRAÇÃO ANIMADA */
 
-    .icon {
-      font-size: 2rem;
-      margin-bottom: 25px;
-      display: block;
-    }
+.fight-art {
+  height: 350px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #ffffff1c;
+  border-bottom: 4px solid var(--azul);
+  border-radius: 42% 42% 15px 15px;
+  background: linear-gradient(145deg, #10284b, #15151c 68%);
+  box-shadow: 0 20px 60px #0008;
+}
 
-    .card h2 {
-      font-size: 1.2rem;
-      margin-bottom: 12px;
-    }
+.fight-art::before,
+.fight-art::after {
+  content: "";
+  position: absolute;
+  border: 1px solid #ffffff2a;
+  border-radius: 50%;
+  width: 255px;
+  height: 255px;
+}
 
-    .card p {
-      color: #aaaac0;
-      line-height: 1.7;
-      font-size: .95rem;
-    }
+.fight-art::after {
+  width: 185px;
+  height: 185px;
+  border-color: #39a9ff77;
+}
 
-    .social {
-      text-align: center;
-      padding: 0 20px 75px;
-    }
+.art-glow {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: var(--azul);
+  filter: blur(75px);
+  opacity: .5;
+  animation: flutuar 6s ease-in-out infinite alternate;
+}
 
-    .social h2 {
-      font-size: 1.8rem;
-      margin-bottom: 12px;
-    }
+.fighter {
+  position: relative;
+  z-index: 1;
+  width: 145px;
+  height: 250px;
+  animation: balancar 3s ease-in-out infinite;
+}
 
-    .social p {
-      color: #aaaac0;
-      margin-bottom: 25px;
-    }
+.head {
+  position: absolute;
+  top: 2px;
+  left: 50px;
+  width: 43px;
+  height: 47px;
+  border-radius: 45% 45% 40% 40%;
+  background: #a86c50;
+  border-top: 12px solid #171216;
+}
 
-    .social-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-    }
+.torso {
+  position: absolute;
+  top: 48px;
+  left: 27px;
+  width: 91px;
+  height: 98px;
+  border-radius: 20px 20px 10px 10px;
+  background: linear-gradient(
+    90deg,
+    #17171d 0 22%,
+    #1261d8 22% 75%,
+    #17171d 75%
+  );
+  border: 2px solid #ffffff24;
+}
 
-    .social-links a {
-      text-decoration: none;
-      color: white;
-      border: 1px solid #ffffff25;
-      padding: 13px 18px;
-      border-radius: 12px;
-      background: #ffffff08;
-      transition: .3s;
-    }
+.arm {
+  position: absolute;
+  top: 60px;
+  width: 23px;
+  height: 83px;
+  border-radius: 15px;
+  background: #a86c50;
+  transform-origin: top;
+}
 
-    .social-links a:hover {
-      color: var(--blue);
-      border-color: var(--blue);
-      transform: translateY(-4px);
-    }
+.arm-left {
+  left: 14px;
+  transform: rotate(28deg);
+  animation: bracoEsquerdo 1.2s ease-in-out infinite alternate;
+}
 
-    footer {
-      border-top: 1px solid #ffffff15;
-      text-align: center;
-      padding: 25px;
-      color: #77778f;
-      font-size: .85rem;
-    }
+.arm-right {
+  right: 8px;
+  transform: rotate(-32deg);
+  animation: bracoDireito 1.2s ease-in-out infinite alternate;
+}
 
-    @keyframes gradient {
-      to { background-position: 300% center; }
-    }
+.shorts {
+  position: absolute;
+  top: 143px;
+  left: 34px;
+  width: 78px;
+  height: 42px;
+  background: #17171d;
+  border-top: 3px solid #eee;
+  border-radius: 0 0 10px 10px;
+}
 
-    @keyframes reveal {
-      from {
-        opacity: 0;
-        transform: translateY(28px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+.leg {
+  position: absolute;
+  top: 180px;
+  width: 25px;
+  height: 61px;
+  background: #a86c50;
+  border-radius: 0 0 12px 12px;
+  transform-origin: top;
+}
 
-    @keyframes float {
-      from { transform: translate(0, 0) scale(1); }
-      to { transform: translate(65px, 45px) scale(1.2); }
-    }
+.leg-left {
+  left: 40px;
+  animation: bracoEsquerdo .9s ease-in-out infinite alternate;
+}
 
-    @media (max-width: 700px) {
-      header { padding: 20px 6%; }
-      h1 { letter-spacing: -2px; }
-      .hero { min-height: 70vh; padding-top: 70px; }
-      .showcase { grid-template-columns: 1fr; }
-      .card { min-height: 175px; }
-      .status { font-size: .7rem; }
-    }
+.leg-right {
+  right: 38px;
+  animation: bracoDireito .9s ease-in-out infinite alternate;
+}
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-        transition-duration: .01ms !important;
-      }
-    }
-  </style>
+.art-stamp {
+  position: absolute;
+  top: 18%;
+  right: 7%;
+  font-weight: 900;
+  font-size: 2rem;
+  color: white;
+  text-shadow: 3px 3px var(--azul);
+  animation: impacto 2.5s infinite;
+}
+
+.art-caption {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  letter-spacing: 3px;
+  font-size: .7rem;
+  font-weight: 900;
+  color: #ffffffb8;
+}
+
+/* FAIXA AZUL */
+
+.ticker {
+  position: relative;
+  z-index: 1;
+  padding: 14px 10px;
+  background: var(--azul);
+  text-align: center;
+  font-size: .85rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+/* CARTÕES E SEÇÕES */
+
+.showcase {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 75px 22px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.section-title {
+  grid-column: 1 / -1;
+  margin-bottom: 8px;
+}
+
+.section-title .eyebrow {
+  margin-bottom: 12px;
+}
+
+.section-title h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 12px;
+}
+
+.section-title p {
+  max-width: 720px;
+  color: var(--cinza);
+  line-height: 1.8;
+}
+
+.card {
+  min-height: 220px;
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  border-radius: 18px;
+  border: 1px solid #ffffff17;
+  background: linear-gradient(
+    145deg,
+    #ffffff0d,
+    #ffffff03
+  );
+  backdrop-filter: blur(12px);
+  transition: transform .4s, border-color .4s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: #39a9ff88;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  right: -70px;
+  bottom: -80px;
+  border-radius: 50%;
+  background: var(--cor-cartao, var(--azul));
+  filter: blur(65px);
+  opacity: .38;
+  transition: .4s;
+}
+
+.card:hover::after {
+  opacity: .85;
+  transform: scale(1.5);
+}
+
+.icon {
+  font-size: 2rem;
+  margin-bottom: 22px;
+  display: block;
+}
+
+.card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.card p {
+  color: #c0bdc8;
+  line-height: 1.75;
+  font-size: .95rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* SEÇÃO DE VÍDEOS */
+
+.video-card {
+  padding: 16px;
+}
+
+.video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  background: #05080f;
+  border: 1px solid #39a9ff55;
+}
+
+.video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-card h2,
+.video-card p {
+  padding: 0 7px;
+}
+
+.video-link {
+  display: inline-block;
+  margin: 15px 7px 5px;
+  color: #72c7ff;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.video-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* SEÇÃO FINAL */
+
+.quote {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 35px 25px;
+  border: 1px solid #39a9ff44;
+  border-radius: 18px;
+  background: linear-gradient(120deg, #0c3476, #171218);
+}
+
+.quote h2 {
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  margin-bottom: 12px;
+}
+
+.quote p {
+  color: #e2dce2;
+  line-height: 1.8;
+  max-width: 760px;
+  margin: 0 auto 20px;
+}
+
+footer {
+  border-top: 2px solid var(--azul);
+  text-align: center;
+  padding: 27px 20px;
+  color: #92909b;
+  font-size: .85rem;
+  line-height: 1.8;
+}
+
+/* EFEITO DE APARECIMENTO */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s, transform .7s;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ANIMAÇÕES */
+
+@keyframes gradiente {
+  to {
+    background-position: 300% center;
+  }
+}
+
+@keyframes entrada {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flutuar {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(55px, 40px) scale(1.2);
+  }
+}
+
+@keyframes balancar {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes bracoEsquerdo {
+  from { transform: rotate(18deg); }
+  to { transform: rotate(35deg); }
+}
+
+@keyframes bracoDireito {
+  from { transform: rotate(-22deg); }
+  to { transform: rotate(-38deg); }
+}
+
+@keyframes impacto {
+  0%, 65% {
+    opacity: 0;
+    transform: scale(.65);
+  }
+  75%, 90% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ADAPTAÇÃO PARA CELULARES */
+
+@media (max-width: 760px) {
+  header {
+    padding: 17px 6%;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 52px 6% 45px;
+  }
+
+  .fight-art {
+    height: 315px;
+  }
+
+  .showcase {
+    grid-template-columns: 1fr;
+    padding: 48px 6%;
+  }
+
+  .card {
+    min-height: 170px;
+  }
+
+  h1 {
+    letter-spacing: -2px;
+  }
+
+  .status {
+    font-size: .72rem;
+  }
+
+  .ticker {
+    font-size: .72rem;
+    line-height: 1.8;
+  }
+
+  nav {
+    gap: 13px;
+  }
+
+  nav a {
+    font-size: .82rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+</style>
 </head>
 
 <body>
-  <canvas id="particles" aria-hidden="true"></canvas>
-  <div class="background-glow glow-one"></div>
-  <div class="background-glow glow-two"></div>
 
-  <header>
-    <div class="logo">MOTION<span>STUDIO.</span></div>
-    <div class="status">✦ Criatividade em movimento</div>
-  </header>
+<canvas id="particles" aria-hidden="true"></canvas>
 
-  <main>
-    <section class="hero">
-      <p class="eyebrow">Design • Vídeo • Criatividade</p>
+<div class="background-glow glow-one"></div>
+<div class="background-glow glow-two"></div>
+
+<header>
+  <div class="logo">CHARLES <span>OLIVEIRA.</span></div>
+
+  <nav aria-label="Navegação principal">
+    <a href="#inicio">Início</a>
+    <a href="#trajetoria">Trajetória</a>
+    <a href="#destaques">Destaques</a>
+    <a href="#videos">Vídeos</a>
+    <a href="#legado">Legado</a>
+  </nav>
+
+  <div class="status">✦ Do Bronx · Página de fã</div>
+</header>
+
+<main>
+
+  <!-- APRESENTAÇÃO -->
+  <section class="hero" id="inicio">
+    <div>
+      <p class="eyebrow">Disciplina • Coragem • Superação</p>
 
       <h1>
-        IDEIAS QUE<br>
-        <span class="gradient-text">GANHAM VIDA.</span>
+        DO BRONX.<br>
+        <span class="gradient-text">FEITO DE LUTA.</span>
       </h1>
 
       <p class="description">
-        Animações incríveis, cores vibrantes e experiências visuais
-        criadas para destacar sua marca e transformar seu conteúdo
-        em algo inesquecível.
+        Conheça a trajetória de Charles “Do Bronx” Oliveira,
+        sua dedicação às artes marciais mistas e o caminho
+        que o tornou um dos nomes marcantes do esporte mundial.
       </p>
 
       <div class="buttons">
-        <a class="button primary" href="#servicos">
-          Explorar efeitos ↗
+        <a class="button primary" href="#trajetoria">
+          Conhecer a trajetória ↗
         </a>
-        <a class="button secondary" href="#redes">
-          Conhecer as redes
+
+        <a class="button secondary" href="#destaques">
+          Ver momentos marcantes
         </a>
       </div>
-    </section>
+    </div>
 
-    <section class="showcase" id="servicos">
-      <article class="card" style="--card-color:#a855f7">
-        <span class="icon">🎬</span>
-        <h2>Animação de vídeo</h2>
-        <p>Movimento, transições e efeitos visuais com estilo cinematográfico.</p>
-      </article>
+    <div class="fight-art" role="img"
+         aria-label="Ilustração estilizada de um lutador em destaque">
+      <div class="art-glow"></div>
 
-      <article class="card" style="--card-color:#00d4ff">
-        <span class="icon">🌈</span>
-        <h2>Cores e efeitos</h2>
-        <p>Gradientes, brilho neon e combinações de cores que chamam atenção.</p>
-      </article>
-
-      <article class="card" style="--card-color:#ff2d95">
-        <span class="icon">📱</span>
-        <h2>Redes sociais</h2>
-        <p>Uma identidade visual marcante para Reels, TikTok e Shorts.</p>
-      </article>
-    </section>
-
-    <section class="social" id="redes">
-      <h2>Vamos criar algo incrível?</h2>
-      <p>Adicione seus perfis e mostre seu trabalho ao mundo.</p>
-
-      <div class="social-links">
-        <!-- Troque os # pelos links reais dos seus perfis -->
-        <a href="#" aria-label="Instagram">📸 Instagram ↗</a>
-        <a href="#" aria-label="TikTok">♪ TikTok ↗</a>
-        <a href="#" aria-label="YouTube">▶ YouTube ↗</a>
+      <div class="fighter">
+        <div class="head"></div>
+        <div class="torso"></div>
+        <div class="arm arm-left"></div>
+        <div class="arm arm-right"></div>
+        <div class="shorts"></div>
+        <div class="leg leg-left"></div>
+        <div class="leg leg-right"></div>
       </div>
-    </section>
-  </main>
 
-  <footer>
-    © 2026 Motion Studio · Criatividade sem limites.
-  </footer>
+      <div class="art-stamp">LUTE!</div>
 
-  <script>
-    const canvas = document.getElementById("particles");
-    const ctx = canvas.getContext("2d");
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+      <div class="art-caption">
+        FOCO · RESPEITO · SUPERAÇÃO
+      </div>
+    </div>
+  </section>
 
-    let particles = [];
-    let width = 0;
-    let height = 0;
+  <div class="ticker">
+    🔵⚫ A TRAJETÓRIA CONTINUA · TRABALHO, RESPEITO E SUPERAÇÃO · DO BRONX 🔵⚫
+  </div>
 
-    function resize() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = window.innerWidth;
-      height = window.innerHeight;
+  <!-- TRAJETÓRIA -->
+  <section class="showcase" id="trajetoria">
 
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      canvas.style.width = width + "px";
-      canvas.style.height = height + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    <div class="section-title reveal">
+      <p class="eyebrow">01 / A TRAJETÓRIA</p>
+      <h2>Uma trajetória de superação</h2>
+      <p>
+        Da origem humilde ao reconhecimento internacional,
+        sua história é marcada por dedicação, resiliência
+        e evolução constante no esporte.
+      </p>
+    </div>
 
-      const count = Math.min(75, Math.floor(width / 16));
+    <article class="card reveal" style="--cor-cartao:#1261d8">
+      <span class="icon">🥋</span>
+      <h2>Raízes no jiu-jítsu</h2>
+      <p>
+        O jiu-jítsu foi uma parte fundamental de sua formação
+        e ajudou a desenvolver as habilidades técnicas
+        que marcam seu estilo de luta.
+      </p>
+    </article>
 
-      particles = Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: Math.random() * 2 + 0.5,
-        speed: Math.random() * 0.35 + 0.1,
-        alpha: Math.random() * 0.6 + 0.15
-      }));
-    }
+    <article class="card reveal" style="--cor-cartao:#39a9ff">
+      <span class="icon">🔥</span>
+      <h2>Persistência</h2>
+      <p>
+        Ao longo da carreira, enfrentou desafios e seguiu
+        evoluindo, mostrando a importância da preparação,
+        da disciplina e do aprendizado.
+      </p>
+    </article>
 
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
+    <article class="card reveal" style="--cor-cartao:#174b91">
+      <span class="icon">🏆</span>
+      <h2>Reconhecimento</h2>
+      <p>
+        Com suas habilidades de finalização e um estilo
+        marcante, conquistou espaço entre os atletas
+        conhecidos do MMA mundial.
+      </p>
+    </article>
 
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(110, 210, 255, ${p.alpha})`;
-        ctx.fill();
+  </section>
 
-        if (!reduceMotion) {
-          p.y -= p.speed;
-          p.x += Math.sin(p.y * 0.01) * 0.2;
+  <!-- DESTAQUES -->
+  <section class="showcase" id="destaques" style="padding-top:10px">
 
-          if (p.y < -5) {
-            p.y = height + 5;
-            p.x = Math.random() * width;
-          }
-        }
-      });
+    <div class="section-title reveal">
+      <p class="eyebrow">02 / MOMENTOS MARCANTES</p>
+      <h2>Técnica, estratégia e coração</h2>
+      <p>
+        O MMA combina preparação física, leitura de combate,
+        técnica e capacidade de tomar decisões sob pressão.
+      </p>
+    </div>
 
-      if (!reduceMotion) requestAnimationFrame(animate);
-    }
+    <article class="card reveal" style="--cor-cartao:#1261d8">
+      <span class="icon">🤼</span>
+      <h2>Jogo de chão</h2>
+      <p>
+        Charles é reconhecido por seu jiu-jítsu e pela
+        capacidade de buscar finalizações durante os combates.
+      </p>
+    </article>
 
-    window.addEventListener("resize", resize);
-    resize();
-    animate();
-  </script>
-</body>
-  </html>
+    <article class="card reveal" style="--cor-cartao:#39a9ff">
+      <span class="icon">🥊</span>
+      <h2>Versatilidade</h2>
+      <p>
+        Competir em alto nível exige adaptação, evolução
+        técnica e preparação para diferentes situações
+        dentro do octógono.
+      </p>
+    </article>
+
+    <article class="card reveal" style="--cor-cartao:#174b91">
+      <span class="icon">💪</span>
+      <h2>Mentalidade</h2>
+      <p>
+        Foco, confiança e compromisso com o treinamento
+        são parte importante da rotina de atletas profissionais.
+      </p>
+    </article>
+
+  </section>
+
+  <!-- VÍDEOS -->
+  <section class="showcase" id="videos" style="padding-top:10px">
+
+    <div class="section-title reveal">
+      <p class="eyebrow">03 / VÍDEOS</p>
+      <h2>Veja a ação</h2>
+      <p>
+        Assista a entrevistas, melhores momentos e conteúdos
+        sobre a trajetória de Charles “Do Bronx” Oliveira.
+      </p>
+    </div>
+
+    <article class="card video-card reveal">
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube.com/embed?listType=search&list=Charles%20Oliveira%20melhores%20momentos"
+          title="Vídeos e melhores momentos de Charles Oliveira"
+          loading="lazy"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <h2>Melhores momentos</h2>
+      <p>
+        Compilações e lances marcantes da carreira de Do Bronx.
+      </p>
+
+      <a class="video-link"
+         href="https://www.youtube.com/results?search_query=Charles+Oliveira+melhores+momentos"
+         target="_blank" rel="noopener noreferrer">
+        Procurar vídeos ↗
+      </a>
+    </article>
+
+    <article class="card video-card reveal">
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube.com/embed?listType=search&list=Charles%20Oliveira%20entrevista"
+          title="Entrevistas com Charles Oliveira"
+          loading="lazy"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <h2>Entrevistas</h2>
+      <p>
+        Conversas e reportagens sobre preparação, carreira
+        e mentalidade.
+      </p>
+
+      <a class="video-link"
+         href="https://www.youtube.com/results?search_query=Charles+Oliveira+entrevista"
+         target="_blank" rel="noopener noreferrer">
+        Procurar entrevistas ↗
+      </a>
+    </article>
+
+    <article class="card video-card reveal">
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube.com/embed?listType=search&list=Charles%20Oliveira%20UFC"
+          title="Vídeos de Charles Oliveira no UFC"
+          loading="lazy"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <h2>Conteúdo do UFC</h2>
+      <p>
+        Assista a vídeos de eventos, prévias e outros
+        conteúdos esportivos relacionados ao atleta.
+      </p>
+
+      <a class="video-link"
+         href="https://www.youtube.com/results?search_query=Charles+Oliveira+UFC"
+         target="_blank" rel="noopener noreferrer">
+        Ver vídeos ↗
+      </a>
+    </article>
+
+  </section>
+
+  <!-- LEGADO -->
+  <section class="showcase" id="legado" style="padding-top:10px">
+
+    <div class="quote reveal">
+      <p class="eyebrow">04 / INSPIRAÇÃO</p>
+
+      <h2>O legado vai além do octógono.</h2>
+
+      <p>
+        A trajetória de Charles Oliveira inspira fãs a valorizar
+        persistência, respeito e dedicação. Esta página é um
+        projeto de fã, sem vínculo oficial com o atleta ou
+        organizações esportivas.
+      </p>
+
+      <a class="button primary" href="#inicio">
+        Voltar ao início ↑
+      </a>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  <strong>Charles Oliveira · Do Bronx</strong><br>
+  Página criada por fã · Conteúdo informativo e não oficial
+</footer>
+
+<script>
+// Partículas azuis animadas no fundo
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+const movimentoReduzido = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
+
+let particulas = [];
+let largura = 0;
+let altura = 0;
+
+function redimensionar() {
+  const escala = Math.min(window.devicePixelRatio || 1, 2);
+
+  largura = window.innerWidth;
+  altura = window.innerHeight;
+
+  canvas.width = largura * escala;
+  canvas.height = altura * escala;
+
+  canvas.style.width = largura + "px";
+  canvas.style.height = altura + "px";
+
+  ctx.setTransform(escala, 0, 0, escala, 0, 0);
+
+  const quantidade = Math.min(65, Math.floor(largura / 18));
+
+  particulas = Array.from({ length: quantidade }, () => ({
+    x: Math.random() * largura,
+    y: Math.random() * altura,
+    raio: Math.random() * 1.8 + .5,
+    velocidade: Math.random() * .35 + .1,
+    opacidade: Math.random() * .45 + .12
+  }));
+}
+
+function animarParticulas() {
+  ctx.clearRect(0, 0, largura, altura);
+
+  particulas.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.raio, 0, Math.PI * 2);
+
+    ctx.fillStyle = `rgba(57,169,255,${p.opacidade})`;
+    ctx.fill();
+
+    if (!movimentoReduzido) {
+      p.y -
   
