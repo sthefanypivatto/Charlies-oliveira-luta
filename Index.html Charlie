@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080816">
+  <title>Motion Studio | Animação Criativa</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --purple: #a855f7;
+      --blue: #00d4ff;
+      --pink: #ff2d95;
+      --orange: #ff8a30;
+      --bg: #080816;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    #particles {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .background-glow {
+      position: fixed;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: .3;
+      pointer-events: none;
+      animation: float 9s ease-in-out infinite alternate;
+    }
+
+    .glow-one {
+      background: var(--purple);
+      top: -130px;
+      left: -100px;
+    }
+
+    .glow-two {
+      background: var(--blue);
+      bottom: -150px;
+      right: -100px;
+      animation-delay: -4s;
+    }
+
+    header, main, footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 8%;
+      border-bottom: 1px solid #ffffff15;
+      backdrop-filter: blur(12px);
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .logo span {
+      color: var(--blue);
+      text-shadow: 0 0 18px var(--blue);
+    }
+
+    .status {
+      color: #b5ffdc;
+      font-size: .8rem;
+      border: 1px solid #48ffb044;
+      border-radius: 30px;
+      padding: 9px 13px;
+      background: #48ffb00c;
+    }
+
+    .hero {
+      min-height: 77vh;
+      padding: 90px 22px 65px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      text-transform: uppercase;
+      font-size: .78rem;
+      font-weight: bold;
+      letter-spacing: 4px;
+      margin-bottom: 25px;
+      animation: reveal .8s both;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 9vw, 7.5rem);
+      line-height: .98;
+      letter-spacing: -4px;
+      font-weight: 900;
+      animation: reveal 1s .1s both;
+    }
+
+    .gradient-text {
+      display: inline-block;
+      color: transparent;
+      background: linear-gradient(
+        90deg,
+        var(--blue),
+        var(--purple),
+        var(--pink),
+        var(--orange),
+        var(--blue)
+      );
+      background-size: 300% auto;
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: gradient 6s linear infinite;
+      filter: drop-shadow(0 0 24px #a855f744);
+    }
+
+    .description {
+      max-width: 620px;
+      color: #b7b7cb;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.8;
+      margin: 28px 0 35px;
+      animation: reveal 1s .25s both;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: reveal 1s .4s both;
+    }
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 52px;
+      padding: 0 25px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: .3s;
+    }
+
+    .primary {
+      color: #080816;
+      background: linear-gradient(110deg, var(--blue), #a8fffb);
+      box-shadow: 0 0 30px #00d4ff33;
+    }
+
+    .secondary {
+      border: 1px solid #ffffff35;
+      background: #ffffff08;
+    }
+
+    .button:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 0 35px #a855f766;
+    }
+
+    .showcase {
+      max-width: 1050px;
+      margin: 0 auto 90px;
+      padding: 0 22px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      min-height: 220px;
+      position: relative;
+      overflow: hidden;
+      padding: 28px;
+      border-radius: 20px;
+      border: 1px solid #ffffff17;
+      background: linear-gradient(145deg, #ffffff0d, #ffffff03);
+      backdrop-filter: blur(12px);
+      transition: transform .4s, border-color .4s;
+      animation: reveal .9s both;
+    }
+
+    .card:nth-child(2) { animation-delay: .15s; }
+    .card:nth-child(3) { animation-delay: .3s; }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: #00d4ff88;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      right: -70px;
+      bottom: -80px;
+      border-radius: 50%;
+      background: var(--card-color, var(--purple));
+      filter: blur(65px);
+      opacity: .6;
+      transition: .4s;
+    }
+
+    .card:hover::after {
+      opacity: 1;
+      transform: scale(1.5);
+    }
+
+    .icon {
+      font-size: 2rem;
+      margin-bottom: 25px;
+      display: block;
+    }
+
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: #aaaac0;
+      line-height: 1.7;
+      font-size: .95rem;
+    }
+
+    .social {
+      text-align: center;
+      padding: 0 20px 75px;
+    }
+
+    .social h2 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+
+    .social p {
+      color: #aaaac0;
+      margin-bottom: 25px;
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .social-links a {
+      text-decoration: none;
+      color: white;
+      border: 1px solid #ffffff25;
+      padding: 13px 18px;
+      border-radius: 12px;
+      background: #ffffff08;
+      transition: .3s;
+    }
+
+    .social-links a:hover {
+      color: var(--blue);
+      border-color: var(--blue);
+      transform: translateY(-4px);
+    }
+
+    footer {
+      border-top: 1px solid #ffffff15;
+      text-align: center;
+      padding: 25px;
+      color: #77778f;
+      font-size: .85rem;
+    }
+
+    @keyframes gradient {
+      to { background-position: 300% center; }
+    }
+
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(65px, 45px) scale(1.2); }
+    }
+
+    @media (max-width: 700px) {
+      header { padding: 20px 6%; }
+      h1 { letter-spacing: -2px; }
+      .hero { min-height: 70vh; padding-top: 70px; }
+      .showcase { grid-template-columns: 1fr; }
+      .card { min-height: 175px; }
+      .status { font-size: .7rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="background-glow glow-one"></div>
+  <div class="background-glow glow-two"></div>
+
+  <header>
+    <div class="logo">MOTION<span>STUDIO.</span></div>
+    <div class="status">✦ Criatividade em movimento</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Design • Vídeo • Criatividade</p>
+
+      <h1>
+        IDEIAS QUE<br>
+        <span class="gradient-text">GANHAM VIDA.</span>
+      </h1>
+
+      <p class="description">
+        Animações incríveis, cores vibrantes e experiências visuais
+        criadas para destacar sua marca e transformar seu conteúdo
+        em algo inesquecível.
+      </p>
+
+      <div class="buttons">
+        <a class="button primary" href="#servicos">
+          Explorar efeitos ↗
+        </a>
+        <a class="button secondary" href="#redes">
+          Conhecer as redes
+        </a>
+      </div>
+    </section>
+
+    <section class="showcase" id="servicos">
+      <article class="card" style="--card-color:#a855f7">
+        <span class="icon">🎬</span>
+        <h2>Animação de vídeo</h2>
+        <p>Movimento, transições e efeitos visuais com estilo cinematográfico.</p>
+      </article>
+
+      <article class="card" style="--card-color:#00d4ff">
+        <span class="icon">🌈</span>
+        <h2>Cores e efeitos</h2>
+        <p>Gradientes, brilho neon e combinações de cores que chamam atenção.</p>
+      </article>
+
+      <article class="card" style="--card-color:#ff2d95">
+        <span class="icon">📱</span>
+        <h2>Redes sociais</h2>
+        <p>Uma identidade visual marcante para Reels, TikTok e Shorts.</p>
+      </article>
+    </section>
+
+    <section class="social" id="redes">
+      <h2>Vamos criar algo incrível?</h2>
+      <p>Adicione seus perfis e mostre seu trabalho ao mundo.</p>
+
+      <div class="social-links">
+        <!-- Troque os # pelos links reais dos seus perfis -->
+        <a href="#" aria-label="Instagram">📸 Instagram ↗</a>
+        <a href="#" aria-label="TikTok">♪ TikTok ↗</a>
+        <a href="#" aria-label="YouTube">▶ YouTube ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Motion Studio · Criatividade sem limites.
+  </footer>
+
+  <script>
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    let particles = [];
+    let width = 0;
+    let height = 0;
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const count = Math.min(75, Math.floor(width / 16));
+
+      particles = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 2 + 0.5,
+        speed: Math.random() * 0.35 + 0.1,
+        alpha: Math.random() * 0.6 + 0.15
+      }));
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(110, 210, 255, ${p.alpha})`;
+        ctx.fill();
+
+        if (!reduceMotion) {
+          p.y -= p.speed;
+          p.x += Math.sin(p.y * 0.01) * 0.2;
+
+          if (p.y < -5) {
+            p.y = height + 5;
+            p.x = Math.random() * width;
+          }
+        }
+      });
+
+      if (!reduceMotion) requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  </script>
+</body>
+  </html>
+  
