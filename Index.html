@@ -1,65 +1,142 @@
-from pathlib import Path
-import zipfile, textwrap, json
+/* PALETA DO BRONX */
+:root {
+  --red: #ff1238;
+  --gold: #ffc857;
+  --black: #070707;
+  --panel: #171717;
+  --white: #ffffff;
+  --muted: #c0c0c0;
+}
 
-root = Path("/mnt/data/do-bronx-news-vip-plus")
-root.mkdir(parents=True, exist_ok=True)
+/* Fundo com degradê */
+body {
+  background:
+    radial-gradient(ellipse at 80% 10%, #5b071722, transparent 35%),
+    #070707;
+  color: #fff;
+}
 
-html = r'''<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090b0e"><meta name="description" content="Do Bronx News — notícias, vídeos e trajetória de Charles Oliveira.">
-<title>DO BRONX NEWS | VIP+</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div class="preloader" id="preloader"><div class="logo-big">DB<span>.</span></div><div class="loadbar"><i></i></div><small>PREPARANDO O OCTÓGONO</small></div>
-<div class="topline"><span class="red-dot"></span> DO BRONX NEWS <b>•</b> A HISTÓRIA CONTINUA</div>
-<header class="header" id="inicio">
-<a class="brand" href="#inicio"><span class="brand-badge">DB</span><span>DO BRONX <small>NEWS / VIP+</small></span></a>
-<button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false"><i></i><i></i><i></i></button>
-<nav id="nav"><a href="#noticias">Notícias</a><a href="#videos">Vídeos</a><a href="#carreira">Carreira</a><a href="#numeros">Números</a><a href="#sobre">Sobre</a><button class="admin-open" id="adminOpen">⚙ Painel</button></nav>
-</header>
-<main>
-<section class="hero">
-<video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=1800&q=85"><source src="https://videos.pexels.com/video-files/4761711/4761711-hd_1920_1080_25fps.mp4" type="video/mp4"></video>
-<div class="hero-shade"></div><div class="hero-content reveal"><p class="eyebrow"><span></span> O LEÃO DE GUARUJÁ</p><h1>FEITO DE<br><em>SUPERAÇÃO.</em></h1><p class="hero-text">Da periferia ao topo do mundo. Notícias, vídeos e momentos marcantes de Charles “Do Bronx” Oliveira.</p><div class="actions"><a class="btn red" href="#noticias">Ver notícias <b>↘</b></a><a class="btn outline" href="#videos">▶ Assistir vídeos</a></div><div class="hero-foot"><span></span> CHARLES OLIVEIRA <b>•</b> CORAGEM · FÉ · LEGADO</div></div>
-<div class="vertical-note">NUNCA FOI SORTE. SEMPRE FOI TRABALHO.</div><a class="scroll" href="#noticias">ROLE PARA DESCOBRIR ↓</a>
-</section>
-<div class="ticker"><div class="ticker-track"><span>DO BRONX</span> ✦ <span>O LEÃO NÃO PARA</span> ✦ <span>RESPEITO SE CONQUISTA</span> ✦ <span>DO BRONX</span> ✦ <span>O LEÃO NÃO PARA</span> ✦ <span>RESPEITO SE CONQUISTA</span> ✦</div></div>
-<section class="section" id="noticias">
-<div class="section-title reveal"><div><p class="eyebrow"><span></span> ACOMPANHE DE PERTO</p><h2>ÚLTIMAS <em>NOTÍCIAS</em></h2></div><button class="refresh" id="refreshNews">↻ Atualizar notícias</button></div>
-<div class="live-status" id="newsStatus"><span class="red-dot"></span> Tentando carregar notícias recentes…</div>
-<div class="news-grid" id="newsGrid">
-<article class="news-card"><a class="news-photo" href="https://www.ufc.com/athlete/charles-oliveira" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1566241142559-40e1dab266c6?auto=format&fit=crop&w=900&q=80" alt="Treino de luta"><span>PERFIL OFICIAL ↗</span></a><div class="news-content"><small>UFC · PERFIL</small><h3>O caminho de Charles Oliveira até o topo</h3><p>Conheça a trajetória e os feitos do brasileiro no octógono.</p><a class="read" href="https://www.ufc.com/athlete/charles-oliveira" target="_blank" rel="noopener">Ler no UFC →</a></div></article>
-<article class="news-card"><a class="news-photo" href="https://www.ufc.com/news" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1599058917212-d750089bc07b?auto=format&fit=crop&w=900&q=80" alt="Atleta em preparação"><span>PREPARAÇÃO ↗</span></a><div class="news-content"><small>UFC · NOTÍCIAS</small><h3>Preparação e disciplina de alto nível</h3><p>Acesse as notícias oficiais e confira as atualizações da organização.</p><a class="read" href="https://www.ufc.com/news" target="_blank" rel="noopener">Ver notícias →</a></div></article>
-<article class="news-card"><a class="news-photo" href="https://www.youtube.com/results?search_query=Charles+Oliveira+UFC" target="_blank" rel="noopener"><img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=900&q=80" alt="Arena de combate"><span>DESTAQUES ↗</span></a><div class="news-content"><small>HISTÓRIA · LEGADO</small><h3>Uma carreira marcada por finalizações</h3><p>Reviva lutas, conquistas e momentos que marcaram sua jornada.</p><a class="read" href="https://www.youtube.com/results?search_query=Charles+Oliveira+UFC" target="_blank" rel="noopener">Ver destaques →</a></div></article>
-</div><p class="fineprint">As notícias automáticas dependem de uma fonte RSS pública e de conexão com a internet. Confira a fonte original antes de republicar.</p>
-</section>
-<section class="video-section" id="videos"><div class="video-bg"></div><div class="video-inner"><div class="section-title reveal"><div><p class="eyebrow"><span></span> DENTRO DO OCTÓGONO</p><h2>VÍDEOS & <em>DESTAQUES</em></h2></div><a class="read" href="https://www.youtube.com/results?search_query=Charles+Oliveira+UFC+highlights" target="_blank" rel="noopener">Mais vídeos no YouTube ↗</a></div>
-<div class="video-grid" id="videoGrid">
-<div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed?listType=search&list=Charles%20Oliveira%20UFC%20highlights" title="Busca de vídeos de Charles Oliveira" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><p>Vídeos em destaque · A disponibilidade do player de busca depende do YouTube.</p></div>
-<div class="video-side"><div class="video-poster"><img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=900&q=80" alt="Arena de luta" loading="lazy"><a class="big-play" href="https://www.youtube.com/results?search_query=Charles+Oliveira+UFC+highlights" target="_blank" rel="noopener" aria-label="Abrir vídeos no YouTube">▶</a></div><h3>Os melhores momentos de Do Bronx</h3><p>Abra a busca no YouTube para encontrar highlights e entrevistas recentes.</p></div>
-</div><p class="fineprint">Para incorporar um vídeo específico com estabilidade, use o ID de um vídeo público no painel de configuração ou altere o ID no arquivo script.js.</p>
-</div></section>
-<section class="section stats" id="numeros"><div class="section-title reveal"><div><p class="eyebrow"><span></span> FEITOS QUE FALAM</p><h2>NÚMEROS DE <em>RESPEITO</em></h2></div><p class="muted">Confira os números atualizados nas fontes oficiais.</p></div><div class="stats-grid"><div class="stat reveal"><strong data-count="1">0</strong><sup>x</sup><p>CAMPEÃO PESO-LEVE DO UFC</p></div><div class="stat reveal"><strong data-count="16">0</strong><sup>+</sup><p>FINALIZAÇÕES NO UFC*</p></div><div class="stat reveal"><strong data-count="20">0</strong><sup>+</sup><p>BÔNUS DE PERFORMANCE*</p></div><div class="stat reveal"><strong data-count="2008">0</strong><p>ANO DE ESTREIA PROFISSIONAL</p></div></div><p class="fineprint">*Números de referência e sujeitos a atualização. Consulte o perfil oficial do UFC para os dados atuais.</p></section>
-<section class="career" id="carreira"><div class="career-intro reveal"><p class="eyebrow"><span></span> A JORNADA</p><h2>CONSTRUINDO<br>UM <em>LEGADO.</em></h2><p>Uma trajetória feita de desafios, aprendizado e momentos inesquecíveis.</p><a class="read" href="https://www.ufc.com/athlete/charles-oliveira" target="_blank" rel="noopener">Biografia oficial ↗</a></div><div class="timeline"><article class="timeline-item reveal"><b>2008</b><span></span><div><h3>O começo profissional</h3><p>Charles inicia sua jornada no MMA profissional.</p></div></article><article class="timeline-item reveal"><b>2010</b><span></span><div><h3>Chegada ao UFC</h3><p>Estreia na maior organização de MMA do mundo.</p></div></article><article class="timeline-item reveal"><b>2021</b><span></span><div><h3>Conquista do cinturão</h3><p>Chega ao topo da divisão peso-leve do UFC.</p></div></article><article class="timeline-item reveal"><b>HOJE</b><span></span><div><h3>O legado continua</h3><p>A jornada segue, capítulo após capítulo.</p></div></article></div></section>
-<section class="newsletter" id="sobre"><div class="reveal"><p class="eyebrow"><span></span> SOBRE O PROJETO</p><h2>FEITO POR FÃS.<br><em>PARA FÃS.</em></h2><p>Um portal independente para celebrar a carreira de Charles “Do Bronx” Oliveira.</p></div><div class="newsletter-box reveal"><h3>Fique por dentro</h3><p>Este formulário é demonstrativo. Nenhum e-mail é enviado ou armazenado.</p><form id="newsletterForm"><input type="email" id="email" placeholder="Seu e-mail" required><button type="submit">↗</button></form><small id="formMessage">Para ativar inscrições reais, conecte um serviço de newsletter.</small></div></section>
-<section class="sources"><span>FONTES RECOMENDADAS</span><a href="https://www.ufc.com/athlete/charles-oliveira" target="_blank" rel="noopener">Perfil UFC ↗</a><a href="https://www.ufc.com/news" target="_blank" rel="noopener">Notícias UFC ↗</a><a href="https://www.youtube.com/results?search_query=Charles+Oliveira" target="_blank" rel="noopener">YouTube ↗</a></section>
-</main>
-<footer class="footer"><a class="brand" href="#inicio"><span class="brand-badge">DB</span><span>DO BRONX <small>NEWS / VIP+</small></span></a><p>PROJETO INDEPENDENTE DE FÃ — NÃO OFICIAL E NÃO AFILIADO AO UFC OU A CHARLES OLIVEIRA.</p><a href="#inicio" class="to-top">↑</a></footer>
+/* Cabeçalho */
+header {
+  background: linear-gradient(90deg, #080808, #21070c, #080808);
+  border-bottom: 2px solid #ff123855;
+}
 
-<dialog id="adminDialog" class="admin-dialog"><form method="dialog" class="dialog-top"><div><p class="eyebrow"><span></span> FERRAMENTAS DO SITE</p><h2>PAINEL <em>VIP+</em></h2></div><button class="close-dialog" aria-label="Fechar">×</button></form>
-<div class="admin-warning">Este painel funciona somente neste navegador e neste dispositivo. Não é um sistema seguro de administração online; as alterações não aparecem para outros visitantes.</div>
-<div class="admin-tabs"><button class="tab active" data-tab="newsAdmin">Adicionar notícia</button><button class="tab" data-tab="videoAdmin">Configurar vídeo</button></div>
-<section id="newsAdmin" class="admin-pane active"><form id="addNewsForm"><label for="adminTitle">Título da notícia</label><input id="adminTitle" required maxlength="100" placeholder="Título da matéria"><label for="adminDesc">Resumo</label><textarea id="adminDesc" required maxlength="240" placeholder="Resumo curto"></textarea><label for="adminUrl">Link da fonte</label><input id="adminUrl" type="url" required placeholder="https://..."><label for="adminImage">URL da imagem (opcional)</label><input id="adminImage" type="url" placeholder="https://..."><button class="btn red" type="submit">Adicionar notícia +</button></form><div id="customNewsList"></div><button class="reset-local" id="clearCustomNews" type="button">Apagar notícias adicionadas neste navegador</button></section>
-<section id="videoAdmin" class="admin-pane"><form id="videoForm"><label for="youtubeId">ID de vídeo público do YouTube</label><input id="youtubeId" placeholder="Ex.: dQw4w9WgXcQ" required><p class="fineprint">O ID é a parte depois de <code>v=</code> no link do YouTube. Use somente vídeos que possam ser incorporados.</p><button class="btn red" type="submit">Atualizar vídeo</button></form><button class="reset-local" id="resetVideo" type="button">Voltar ao vídeo padrão</button></section>
-</dialog>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="script.js"></script>
-</body></html>'''
+/* Título principal */
+.hero h1 span {
+  color: #ff1238;
+  text-shadow:
+    0 0 10px #ff123877,
+    0 0 35px #ff123844;
+}
 
-css = r'''*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}body{margin:0;background:#090b0e;color:#f5f5f4;font-family:Inter,Arial,sans-serif;overflow-x:hidden}a{color:inherit;text-decoration:none}button,input,textarea{font:inherit}button{cursor:pointer}.preloader{position:fixed;inset:0;z-index:999;background:#08090b;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .5s,visibility .5s}.preloader.done{opacity:0;visibility:hidden}.logo-big{font:900 70px 'Barlow Condensed',Impact,sans-serif;letter-spacing:-4px}.logo-big span{color:#ef332d}.loadbar{width:170px;height:2px;background:#303238;margin:15px}.loadbar i{display:block;width:100%;height:100%;background:#ef332d;transform-origin:left;animation:loading 1.1s ease-out}.preloader small{font-size:9px;letter-spacing:3px;color:#aaa}@keyframes loading{from{transform:scaleX(0)}to{transform:scaleX(1)}}.topline{height:29px;background:#ef332d;display:flex;align-items:center;justify-content:center;gap:10px;font-size:9px;font-weight:800;letter-spacing:1.6px}.red-dot,.eyebrow span{width:6px;height:6px;background:#ef332d;display:inline-block;border-radius:50%;box-shadow:0 0 10px #ef332d}.header{height:75px;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;border-bottom:1px solid #25272b;background:#0a0c0f;position:relative;z-index:20}.brand{display:flex;align-items:center;gap:11px;font:800 18px 'Barlow Condensed',Impact,sans-serif;letter-spacing:1px}.brand small{display:block;color:#ef332d;font:700 9px Inter,sans-serif;letter-spacing:3px;margin-top:3px}.brand-badge{width:39px;height:39px;background:#ef332d;display:grid;place-items:center;font:900 17px 'Barlow Condensed',Impact,sans-serif;transform:skew(-6deg)}nav{display:flex;align-items:center;gap:26px}nav a,nav button{font-size:10px;font-weight:700;color:#d5d6d8;background:none;border:0;padding:8px 0}nav a:hover,nav button:hover{color:#ef332d}.admin-open{border:1px solid #555;padding:10px 13px} .hamburger{display:none;background:none;border:0}.hamburger i{display:block;width:24px;height:2px;background:white;margin:5px}
-.hero{height:min(790px,calc(100vh - 104px));min-height:620px;position:relative;display:flex;align-items:center;overflow:hidden;background:#0b0d10}.hero-video,.hero-shade{position:absolute;inset:0;width:100%;height:100%}.hero-video{object-fit:cover;opacity:.43;filter:grayscale(1) contrast(1.15)}.hero-shade{background:linear-gradient(90deg,rgba(5,6,8,.97),rgba(5,6,8,.74) 45%,rgba(5,6,8,.1)),linear-gradient(0deg,#090b0e,transparent 25%,rgba(0,0,0,.2))}.hero-content{position:relative;z-index:2;padding:35px 9vw;max-width:850px}.eyebrow{display:flex;align-items:center;gap:10px;font-size:9px;font-weight:800;letter-spacing:2.3px;color:#c1c3c8}.hero h1,.section-title h2,.career h2,.newsletter h2{font:900 clamp(66px,9vw,126px)/.82 'Barlow Condensed',Impact,sans-serif;letter-spacing:-1px;margin:27px 0}.hero h1 em,.section-title h2 em,.career h2 em,.newsletter h2 em,.admin-dialog h2 em{color:#ef332d;font-style:normal}.hero-text{max-width:420px;color:#c3c5ca;font-size:13px;line-height:1.8}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}.btn{border:0;padding:15px 18px;font-size:10px;font-weight:800;display:inline-flex;gap:20px;align-items:center;transition:transform .2s}.btn:hover{transform:translateY(-3px)}.btn.red{background:#ef332d;color:white}.btn.outline{border:1px solid #777;background:transparent;color:white}.hero-foot{display:flex;align-items:center;gap:12px;margin-top:52px;font-size:8px;font-weight:800;letter
+/* Brilho dourado nos detalhes */
+.eyebrow,
+.event time {
+  color: #ffc857;
+}
+
+/* Botões com degradê */
+.btn {
+  background: linear-gradient(135deg, #ff1238, #a80020);
+  border: 1px solid #ff536b;
+  box-shadow: 0 5px 20px #ff123833;
+}
+
+.btn:hover {
+  background: linear-gradient(135deg, #ff536b, #e00027);
+  box-shadow: 0 0 30px #ff123877;
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Cards coloridos */
+.news-card,
+.video-card {
+  background: linear-gradient(145deg, #1c1c1c, #101010);
+  border: 1px solid #ffffff18;
+  border-radius: 10px;
+}
+
+.news-card:hover,
+.video-card:hover {
+  border-color: #ff1238;
+  box-shadow: 0 12px 35px #ff123822;
+}
+
+/* Etiquetas */
+.tag {
+  background: linear-gradient(90deg, #ff1238, #b50024);
+  color: white;
+}
+
+/* Faixa animada */
+.ticker {
+  background: linear-gradient(90deg, #a80020, #ff1238, #a80020);
+}
+
+/* Seção de vídeos */
+.video-section {
+  background:
+    radial-gradient(ellipse at top right, #5c0b1d55, transparent 50%),
+    linear-gradient(135deg, #16090c, #080808);
+}
+
+/* Linha do tempo */
+.event::before {
+  background: #ff1238;
+  box-shadow: 0 0 18px #ff1238;
+}
+
+.timeline {
+  border-left-color: #ff123855;
+}
+
+/* Frase de impacto */
+.quote {
+  background: linear-gradient(110deg, #26080e, #111111 75%);
+  border-left: 5px solid #ff1238;
+  box-shadow: inset 0 0 40px #ff12380a;
+}
+
+.quote blockquote span {
+  color: #ffc857;
+  text-shadow: 0 0 20px #ffc85733;
+}
+
+/* Rolagem suave e seleção de texto */
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: #ff1238;
+  color: white;
+}
+
+/* Barra de rolagem */
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#ff1238, #9b001d);
+  border-radius: 10px;
+}
+
+/* Links */
+nav a:hover,
+.read:hover,
+footer a:hover {
+  color: #ffc857;
+}
+
+/* Menu no celular */
+@media (max-width: 800px) {
+  nav {
+    background: linear-gradient(180deg, #19070b, #090909);
+  }
+}
