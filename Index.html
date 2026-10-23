@@ -46,3 +46,52 @@ nav {
   font-style: italic;
 }
 .logo span, h1 span { color: var(--az
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charles Oliveira | Do Bronx</title>
+
+<style>
+:root {
+  --fundo: #030711;
+  --azul: #087cff;
+  --ciano: #00c8ff;
+  --texto: #f5f8ff;
+  --cinza: #b8c8dc;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration: none; }
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #030711f5;
+  border-bottom: 1px solid var(--azul);
+}
+nav {
+  max-width: 1200px;
+  margin: auto;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.logo {
+  font-size: 23px;
+  font-weight: 900;
+  font-style: italic;
+}
+.logo span, h1 span { color: var(--az
+                            
